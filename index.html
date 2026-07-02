@@ -186,88 +186,77 @@
 
   <sc-if value="{{ isResult }}" hint-placeholder-val="{{ false }}">
     <div style="position:relative;height:100%;width:100%;display:flex;justify-content:center;overflow-y:auto;">
-      <div style="width:100%;max-width:720px;min-height:100%;display:flex;flex-direction:column;padding:34px 40px 40px;gap:20px;">
+      <div style="width:100%;max-width:720px;min-height:100%;display:flex;flex-direction:column;padding:28px 40px 28px;gap:18px;">
+
+        <!-- Header: logo + sair -->
         <div style="display:flex;align-items:center;justify-content:space-between;">
-          <div style="display:flex;align-items:center;">
-            <img src="{{ logoSrc }}" style="height:48px;filter:{{ logoFilter }};" alt="TIS" />
-          </div>
-          <span style="font-size:13px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);">{{ L.resultHeader }}</span>
-        </div>
-
-        <div style="display:flex;flex-direction:column;align-items:center;animation:fadeUp .5s .05s both;">
-          <div style="position:relative;width:260px;height:260px;">
-            <svg width="260" height="260" viewBox="0 0 260 260">
-              <circle cx="130" cy="130" r="110" fill="none" stroke="var(--track)" strokeWidth="18"></circle>
-              <circle cx="130" cy="130" r="110" fill="none" stroke="{{ levelColor }}" strokeWidth="18" strokeLinecap="round" strokeDasharray="{{ ringCirc }}" strokeDashoffset="{{ ringOffset }}" transform="rotate(-90 130 130)"></circle>
-            </svg>
-            <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;">
-              <div style="font-size:66px;font-weight:700;line-height:1;letter-spacing:-1px;color:var(--text);">{{ displayScore }}</div>
-              <div style="font-size:15px;color:var(--muted);font-weight:500;margin-top:4px;">{{ L.resultOf }}</div>
-            </div>
-          </div>
-          <div style="font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:12px;">{{ L.resultLevelLabel }}</div>
-          <div style="font-size:36px;font-weight:700;margin-top:2px;text-align:center;letter-spacing:-0.5px;color:{{ levelColor }}">{{ levelName }}</div>
-          <p style="font-size:17px;color:var(--muted);text-align:center;margin:10px 0 0;max-width:520px;line-height:1.5;">{{ profile }}</p>
-        </div>
-
-        <div style="background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px 24px;animation:fadeUp .5s .12s both;">
-          <h2 style="font-size:20px;font-weight:600;margin:0;color:var(--text);">{{ L.resultCharacteristics }}</h2>
-          <div style="display:flex;flex-direction:column;gap:12px;margin-top:16px;">
-            <sc-for list="{{ traits }}" as="t" hint-placeholder-count="4">
-              <div style="display:flex;align-items:flex-start;gap:12px;">
-                <iconify-icon icon="lucide:check" style="font-size:22px;color:var(--accent);flex-shrink:0;margin-top:1px;"></iconify-icon>
-                <span style="font-size:17px;color:var(--text);line-height:1.4;">{{ t }}</span>
-              </div>
-            </sc-for>
-          </div>
-        </div>
-
-        <div style="background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px 24px;animation:fadeUp .5s .19s both;">
-          <h2 style="font-size:20px;font-weight:600;margin:0;color:var(--text);">{{ L.resultPriorities }}</h2>
-          <p style="font-size:14px;color:var(--muted);margin:6px 0 0;">{{ prioritiesSub }}</p>
-          <div style="display:flex;flex-direction:column;gap:12px;margin-top:16px;">
-            <sc-for list="{{ priorities }}" as="p" hint-placeholder-count="3">
-              <div style="display:flex;align-items:flex-start;gap:12px;">
-                <iconify-icon icon="lucide:target" style="font-size:22px;color:#56CCF2;flex-shrink:0;margin-top:1px;"></iconify-icon>
-                <span style="font-size:17px;color:var(--text);line-height:1.4;">{{ p }}</span>
-              </div>
-            </sc-for>
-          </div>
-        </div>
-
-        <div style="animation:fadeUp .5s .26s both;">
-          <h2 style="font-size:20px;font-weight:600;margin:0 0 4px;color:var(--text);">{{ L.resultSolutions }}</h2>
-          <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:14px;">
-            <sc-for list="{{ solutions }}" as="s" hint-placeholder-count="4">
-              <div style="display:flex;align-items:center;gap:8px;padding:12px 16px;background:var(--surface2);border:1px solid var(--line);border-radius:999px;font-size:15px;font-weight:500;color:var(--text);">
-                <iconify-icon icon="lucide:sparkles" style="font-size:18px;color:var(--accent)"></iconify-icon>{{ s }}
-              </div>
-            </sc-for>
-          </div>
-        </div>
-
-        <div style="background:var(--ctaGrad);border:1px solid var(--ctaBorder);border-radius:18px;padding:26px;animation:fadeUp .5s .32s both;">
-          <div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#93C5FD;">
-            <iconify-icon icon="lucide:rocket" style="font-size:18px"></iconify-icon>{{ nextStepLine }}
-          </div>
-          <h2 style="font-size:24px;font-weight:700;margin:12px 0 6px;line-height:1.25;letter-spacing:-0.3px;color:#FFFFFF;">{{ L.ctaTitle }}</h2>
-          <p style="color:#C9D6EC;font-size:16px;margin:0 0 20px;line-height:1.5;">{{ L.ctaSub }}</p>
-          <button onClick="{{ book }}" style="display:flex;align-items:center;justify-content:center;gap:12px;width:100%;min-height:64px;padding:0 24px;background:var(--accent);color:#FFFFFF;font-family:Bronkoh,system-ui,sans-serif;font-size:19px;font-weight:600;border:none;border-radius:12px;cursor:pointer;animation:glowPulse 2.4s ease-in-out infinite;" style-active="transform:scale(0.98);filter:brightness(0.94)">
-            {{ L.ctaButton }} <iconify-icon icon="lucide:calendar-check" style="font-size:22px"></iconify-icon>
+          <img src="{{ logoSrc }}" style="height:40px;filter:{{ logoFilter }};" alt="TIS" />
+          <button onClick="{{ exit }}" style="display:flex;align-items:center;gap:6px;padding:7px 14px;border-radius:999px;background:transparent;border:1px solid var(--line);color:var(--muted);font-family:Bronkoh,system-ui,sans-serif;font-size:14px;font-weight:500;cursor:pointer;" style-active="opacity:0.7">
+            {{ exitLabel }} <iconify-icon icon="lucide:x" style="font-size:16px"></iconify-icon>
           </button>
-          <sc-if value="{{ qr }}" hint-placeholder-val="{{ false }}">
-            <div style="display:flex;align-items:center;gap:16px;margin-top:20px;padding:16px;background:#FFFFFF;border-radius:14px;">
-              <img src="{{ qr }}" alt="QR" style="width:92px;height:92px;display:block;flex-shrink:0;" />
-              <span style="font-size:15px;color:#0B1220;font-weight:500;line-height:1.4;">{{ L.qrCaption }}</span>
+        </div>
+
+        <!-- Score + nível horizontal -->
+        <div style="display:flex;align-items:center;gap:24px;animation:fadeUp .5s both;">
+          <div style="position:relative;width:160px;height:160px;flex-shrink:0;">
+            <div style="position:absolute;top:0;left:0;transform:scale(0.615);transform-origin:top left;">
+              <svg width="260" height="260" viewBox="0 0 260 260">
+                <circle cx="130" cy="130" r="110" fill="none" stroke="var(--track)" strokeWidth="18"></circle>
+                <circle cx="130" cy="130" r="110" fill="none" stroke="{{ levelColor }}" strokeWidth="18" strokeLinecap="round" strokeDasharray="{{ ringCirc }}" strokeDashoffset="{{ ringOffset }}" transform="rotate(-90 130 130)"></circle>
+              </svg>
+              <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+                <div style="font-size:66px;font-weight:700;line-height:1;letter-spacing:-1px;color:var(--text);">{{ displayScore }}</div>
+                <div style="font-size:15px;color:var(--muted);font-weight:500;margin-top:4px;">{{ L.resultOf }}</div>
+              </div>
             </div>
+          </div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--muted);">{{ L.resultLevelLabel }}</div>
+            <div style="font-size:30px;font-weight:700;margin-top:4px;letter-spacing:-0.5px;color:{{ levelColor }}">{{ levelName }}</div>
+            <p style="font-size:15px;color:var(--muted);margin:8px 0 0;line-height:1.45;">{{ profile }}</p>
+          </div>
+        </div>
+
+        <!-- Soluções como chips compactos -->
+        <div style="display:flex;flex-wrap:wrap;gap:8px;animation:fadeUp .5s .1s both;">
+          <sc-for list="{{ solutions }}" as="s" hint-placeholder-count="4">
+            <div style="display:flex;align-items:center;gap:6px;padding:8px 14px;background:var(--surface2);border:1px solid var(--line);border-radius:999px;font-size:13px;font-weight:500;color:var(--text);">
+              <iconify-icon icon="lucide:sparkles" style="font-size:14px;color:var(--accent)"></iconify-icon>{{ s }}
+            </div>
+          </sc-for>
+        </div>
+
+        <!-- CTA: ocupa o resto do ecrã -->
+        <div style="flex:1;background:var(--ctaGrad);border:1px solid var(--ctaBorder);border-radius:20px;padding:28px;display:flex;flex-direction:column;gap:14px;animation:fadeUp .5s .18s both;">
+          <div style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#93C5FD;">
+            <iconify-icon icon="lucide:rocket" style="font-size:16px"></iconify-icon>{{ nextStepLine }}
+          </div>
+          <h2 style="font-size:26px;font-weight:700;margin:0;line-height:1.2;letter-spacing:-0.3px;color:#FFFFFF;">{{ L.ctaTitle }}</h2>
+          <p style="color:#C9D6EC;font-size:15px;margin:0;line-height:1.5;">{{ L.ctaSub }}</p>
+          <!-- QR + botão lado a lado -->
+          <sc-if value="{{ qr }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;gap:14px;align-items:stretch;margin-top:4px;">
+              <div style="background:#FFFFFF;border-radius:14px;padding:14px;display:flex;flex-direction:column;align-items:center;gap:8px;flex-shrink:0;">
+                <img src="{{ qr }}" alt="QR" style="width:100px;height:100px;display:block;" />
+                <span style="font-size:11px;color:#0B1220;font-weight:500;text-align:center;max-width:110px;line-height:1.3;">{{ L.qrCaption }}</span>
+              </div>
+              <button onClick="{{ book }}" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:0 16px;background:var(--accent);color:#FFFFFF;font-family:Bronkoh,system-ui,sans-serif;font-size:17px;font-weight:600;border:none;border-radius:14px;cursor:pointer;animation:glowPulse 2.4s ease-in-out infinite;line-height:1.3;" style-active="transform:scale(0.98);filter:brightness(0.94)">
+                {{ L.ctaButton }} <iconify-icon icon="lucide:calendar-check" style="font-size:22px"></iconify-icon>
+              </button>
+            </div>
+          </sc-if>
+          <sc-if value="{{ noQr }}" hint-placeholder-val="{{ true }}">
+            <button onClick="{{ book }}" style="display:flex;align-items:center;justify-content:center;gap:12px;width:100%;min-height:68px;padding:0 24px;background:var(--accent);color:#FFFFFF;font-family:Bronkoh,system-ui,sans-serif;font-size:19px;font-weight:600;border:none;border-radius:14px;cursor:pointer;animation:glowPulse 2.4s ease-in-out infinite;margin-top:4px;" style-active="transform:scale(0.98);filter:brightness(0.94)">
+              {{ L.ctaButton }} <iconify-icon icon="lucide:calendar-check" style="font-size:22px"></iconify-icon>
+            </button>
           </sc-if>
         </div>
 
-        <p style="text-align:center;color:var(--muted);font-size:16px;line-height:1.6;font-style:italic;margin:6px 0 0;">{{ L.closing }}</p>
-
-        <button onClick="{{ restart }}" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:56px;background:transparent;border:2px solid var(--line);border-radius:12px;color:var(--muted);font-family:Bronkoh,system-ui,sans-serif;font-size:17px;font-weight:600;cursor:pointer;" style-active="transform:scale(0.99)">
-          <iconify-icon icon="lucide:rotate-ccw" style="font-size:20px"></iconify-icon>{{ L.resultRestart }}
+        <!-- Recomeçar discreto -->
+        <button onClick="{{ restart }}" style="display:flex;align-items:center;justify-content:center;gap:8px;background:transparent;border:none;color:var(--faint);font-family:Bronkoh,system-ui,sans-serif;font-size:14px;cursor:pointer;padding:2px;">
+          <iconify-icon icon="lucide:rotate-ccw" style="font-size:15px"></iconify-icon>{{ L.resultRestart }}
         </button>
+
       </div>
     </div>
   </sc-if>
@@ -535,7 +524,7 @@ class Component extends DCLogic {
       submit:()=>this.submitContact(),
 
       displayScore:st.displayScore, ringCirc, ringOffset, levelColor:level.color, levelName:lv.name, profile:lv.profile,
-      traits:lv.traits, solutions:lv.solutions, priorities, prioritiesSub, nextStepLine, qr:st.qr,
+      traits:lv.traits, solutions:lv.solutions, priorities, prioritiesSub, nextStepLine, qr:st.qr, noQr:!st.qr,
       book:()=>this.setState({screen:'thanks'}), restart:()=>this.restart(),
     };
   }
