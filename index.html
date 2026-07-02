@@ -234,16 +234,16 @@
           <h2 style="font-size:22px;font-weight:700;margin:0;line-height:1.25;letter-spacing:-0.2px;color:#FFFFFF;">{{ L.ctaTitle }}</h2>
 
           <!-- QR (esq) + características (dir) -->
-          <div style="flex:1;display:flex;gap:16px;align-items:stretch;min-height:0;">
+          <div style="flex:1;display:flex;gap:16px;align-items:flex-start;min-height:0;">
             <!-- QR à esquerda quando disponível -->
             <sc-if value="{{ qr }}" hint-placeholder-val="{{ false }}">
-              <div style="background:#FFFFFF;border-radius:12px;padding:12px;display:flex;flex-direction:column;align-items:center;gap:6px;flex-shrink:0;justify-content:center;">
-                <img src="{{ qr }}" alt="QR" style="width:96px;height:96px;display:block;" />
-                <span style="font-size:10px;color:#0B1220;font-weight:500;text-align:center;max-width:96px;line-height:1.3;">{{ L.qrCaption }}</span>
+              <div style="background:#FFFFFF;border-radius:12px;padding:12px;display:flex;flex-direction:column;align-items:center;gap:6px;flex-shrink:0;">
+                <img src="{{ qr }}" alt="QR" style="width:130px;height:130px;display:block;" />
+                <span style="font-size:10px;color:#0B1220;font-weight:500;text-align:center;max-width:120px;line-height:1.3;">{{ L.qrCaption }}</span>
               </div>
             </sc-if>
             <!-- características à direita -->
-            <div style="flex:1;display:flex;flex-direction:column;gap:9px;justify-content:center;">
+            <div style="flex:1;display:flex;flex-direction:column;gap:9px;">
               <sc-for list="{{ traits }}" as="t" hint-placeholder-count="4">
                 <div style="display:flex;align-items:flex-start;gap:10px;">
                   <iconify-icon icon="lucide:check-circle" style="font-size:18px;color:#93C5FD;flex-shrink:0;margin-top:1px;"></iconify-icon>
@@ -252,12 +252,12 @@
               </sc-for>
             </div>
           </div>
-
-          <!-- Botão full rounded pulsante -->
-          <button onClick="{{ book }}" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:60px;padding:0 24px;background:var(--accent);color:#FFFFFF;font-family:Bronkoh,system-ui,sans-serif;font-size:18px;font-weight:600;border:none;border-radius:999px;cursor:pointer;animation:glowPulse 2.4s ease-in-out infinite;" style-active="transform:scale(0.98);filter:brightness(0.94)">
-            {{ L.ctaButton }} <iconify-icon icon="lucide:calendar-check" style="font-size:20px"></iconify-icon>
-          </button>
         </div>
+
+        <!-- Botão fora do card azul -->
+        <button onClick="{{ book }}" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:62px;padding:0 24px;background:var(--accent);color:#FFFFFF;font-family:Bronkoh,system-ui,sans-serif;font-size:18px;font-weight:600;border:none;border-radius:999px;cursor:pointer;animation:glowPulse 2.4s ease-in-out infinite;" style-active="transform:scale(0.98);filter:brightness(0.94)">
+          <iconify-icon icon="lucide:calendar-check" style="font-size:20px"></iconify-icon> {{ L.ctaButton }}
+        </button>
 
         <!-- Recomeçar discreto -->
         <button onClick="{{ restart }}" style="display:flex;align-items:center;justify-content:center;gap:8px;background:transparent;border:none;color:var(--faint);font-family:Bronkoh,system-ui,sans-serif;font-size:14px;cursor:pointer;padding:2px;">
