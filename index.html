@@ -33,12 +33,8 @@
     <div style="position:relative;height:100%;width:100%;display:flex;justify-content:center;">
       <div style="width:100%;max-width:720px;height:100%;display:flex;flex-direction:column;padding:40px;">
         <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
-          <div style="display:flex;align-items:center;gap:12px;">
-            <div style="width:46px;height:46px;border-radius:11px;background:linear-gradient(135deg,var(--accent),var(--primary));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:21px;color:#04201C;">T</div>
-            <div style="display:flex;flex-direction:column;line-height:1;">
-              <span style="font-size:22px;font-weight:700;letter-spacing:1.5px;">TIS</span>
-              <span style="font-size:11px;font-weight:500;color:var(--muted);letter-spacing:.3px;margin-top:4px;">{{ L.tagline }}</span>
-            </div>
+          <div style="display:flex;align-items:center;">
+            <img src="{{ logoSrc }}" style="height:44px;" alt="TIS" />
           </div>
           <div style="display:flex;align-items:center;gap:10px;">
             <div style="display:flex;background:var(--surface);border:1px solid var(--line);border-radius:999px;overflow:hidden;">
@@ -183,9 +179,8 @@
     <div style="position:relative;height:100%;width:100%;display:flex;justify-content:center;overflow-y:auto;">
       <div style="width:100%;max-width:720px;min-height:100%;display:flex;flex-direction:column;padding:34px 40px 40px;gap:20px;">
         <div style="display:flex;align-items:center;justify-content:space-between;">
-          <div style="display:flex;align-items:center;gap:10px;">
-            <div style="width:36px;height:36px;border-radius:9px;background:linear-gradient(135deg,var(--accent),var(--primary));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;color:#04201C;">T</div>
-            <span style="font-size:18px;font-weight:700;letter-spacing:1.5px;color:var(--text);">TIS</span>
+          <div style="display:flex;align-items:center;">
+            <img src="{{ logoSrc }}" style="height:36px;" alt="TIS" />
           </div>
           <span style="font-size:13px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);">{{ L.resultHeader }}</span>
         </div>
@@ -516,6 +511,7 @@ class Component extends DCLogic {
 
     return {
       rootStyle, L,
+      logoSrc: st.theme==='dark' ? './logos_TIS/logo_white.png' : './logos_TIS/logo_tis.png',
       isWelcome: st.screen==='welcome', isQuestion: st.screen==='q', isContact: st.screen==='contact', isResult: st.screen==='result', isThanks: st.screen==='thanks',
       start: ()=>{ this._dir='fwd'; this.setState({screen:'q', qIndex:0}); },
       setLangPt: ()=>{ this._manualLang=true; this.setState({lang:'pt'}); },
