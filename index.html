@@ -75,6 +75,9 @@
               <sc-for list="{{ segments }}" as="seg" hint-placeholder-count="7"><div style="{{ seg.style }}"></div></sc-for>
             </div>
           </div>
+          <button onClick="{{ exit }}" style="display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;background:transparent;border:1px solid var(--line);color:var(--muted);font-family:Bronkoh,system-ui,sans-serif;font-size:14px;font-weight:500;cursor:pointer;flex-shrink:0;" style-active="opacity:0.7">
+            {{ exitLabel }} <iconify-icon icon="lucide:x" style="font-size:16px"></iconify-icon>
+          </button>
         </div>
 
         <h1 style="font-size:32px;font-weight:600;line-height:1.2;margin:30px 0 2px;letter-spacing:-0.3px;color:var(--text);">{{ qTitle }}</h1>
@@ -126,9 +129,14 @@
   <sc-if value="{{ isContact }}" hint-placeholder-val="{{ false }}">
     <div style="position:relative;height:100%;width:100%;display:flex;justify-content:center;overflow-y:auto;">
       <div style="width:100%;max-width:720px;min-height:100%;display:flex;flex-direction:column;padding:40px 40px 32px;">
-        <button onClick="{{ goBack }}" style="display:flex;align-items:center;justify-content:center;width:52px;height:52px;flex-shrink:0;border-radius:12px;background:var(--surface);border:2px solid var(--line);color:var(--muted);cursor:pointer;" style-active="transform:scale(0.96)">
-          <iconify-icon icon="lucide:arrow-left" style="font-size:24px"></iconify-icon>
-        </button>
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <button onClick="{{ goBack }}" style="display:flex;align-items:center;justify-content:center;width:52px;height:52px;flex-shrink:0;border-radius:12px;background:var(--surface);border:2px solid var(--line);color:var(--muted);cursor:pointer;" style-active="transform:scale(0.96)">
+            <iconify-icon icon="lucide:arrow-left" style="font-size:24px"></iconify-icon>
+          </button>
+          <button onClick="{{ exit }}" style="display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;background:transparent;border:1px solid var(--line);color:var(--muted);font-family:Bronkoh,system-ui,sans-serif;font-size:14px;font-weight:500;cursor:pointer;" style-active="opacity:0.7">
+            {{ exitLabel }} <iconify-icon icon="lucide:x" style="font-size:16px"></iconify-icon>
+          </button>
+        </div>
         <div style="margin-top:24px;">
           <div style="font-size:14px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--eyebrow);">{{ L.contactBadge }}</div>
           <h1 style="font-size:32px;font-weight:700;line-height:1.2;margin:10px 0 6px;letter-spacing:-0.3px;color:var(--text);">{{ L.contactTitle }}</h1>
@@ -372,21 +380,11 @@ class Component extends DCLogic {
     this._onl = ()=>this.setState({online:navigator.onLine});
     window.addEventListener('online', this._onl);
     window.addEventListener('offline', this._onl);
-    this._bump = ()=>{
-      clearTimeout(this._idle);
-      if(this.state.screen!=='welcome'){
-        const secs = this.props.resetSeconds != null ? this.props.resetSeconds : 40;
-        this._idle = setTimeout(()=>this.restart(), secs*1000);
-      }
-    };
-    document.addEventListener('pointerdown', this._bump, true);
-    document.addEventListener('keydown', this._bump, true);
   }
 
   componentWillUnmount(){
-    clearTimeout(this._advTimer); clearTimeout(this._idle); cancelAnimationFrame(this._raf);
+    clearTimeout(this._advTimer); cancelAnimationFrame(this._raf);
     if(this._onl){ window.removeEventListener('online', this._onl); window.removeEventListener('offline', this._onl); }
-    if(this._bump){ document.removeEventListener('pointerdown', this._bump, true); document.removeEventListener('keydown', this._bump, true); }
   }
 
   componentDidUpdate(pp, ps){
@@ -396,7 +394,6 @@ class Component extends DCLogic {
       const from = this._dir==='back' ? '-42px' : '42px';
       try { this.qStage.animate([{opacity:0,transform:'translateX('+from+')'},{opacity:1,transform:'translateX(0)'}],{duration:260,easing:'cubic-bezier(.2,.8,.2,1)'}); } catch(e){}
     }
-    if(ps.screen!==this.state.screen || ps.qIndex!==this.state.qIndex){ if(this._bump) this._bump(); }
   }
 
   currentQ(){ return this.QUESTIONS[this.state.qIndex]; }
@@ -520,6 +517,8 @@ class Component extends DCLogic {
       langPtStyle: lang==='pt'?langActive:langInactive, langEnStyle: lang==='en'?langActive:langInactive,
       toggleTheme: ()=>{ this._manualTheme=true; this.setState(s=>({theme:s.theme==='dark'?'light':'dark'})); },
       themeIcon: st.theme==='dark'?'lucide:sun':'lucide:moon',
+      exitLabel: lang==='pt'?'Sair':'Exit',
+      exit: ()=>this.restart(),
 
       qTitle:q.title[lang], qProgress, segments, goBack: ()=>this.back(),
       isSector:q.kind==='sector', isLadder:q.kind==='ladder', isSingle:q.kind==='single',
