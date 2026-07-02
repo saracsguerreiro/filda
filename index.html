@@ -42,7 +42,7 @@
               <button onClick="{{ setLangPt }}" style="{{ langPtStyle }}">PT</button>
               <button onClick="{{ setLangEn }}" style="{{ langEnStyle }}">EN</button>
             </div>
-            <button onClick="{{ toggleTheme }}" style="width:42px;height:42px;border-radius:999px;background:var(--surface);border:1px solid var(--line);color:var(--muted);display:flex;align-items:center;justify-content:center;cursor:pointer;" style-active="transform:scale(0.95)">
+            <button onClick="{{ toggleTheme }}" style="width:42px;height:42px;border-radius:999px;background:#FFFFFF;border:1px solid var(--line);color:#0B1220;display:flex;align-items:center;justify-content:center;cursor:pointer;" style-active="transform:scale(0.95)">
               <iconify-icon icon="{{ themeIcon }}" style="font-size:20px"></iconify-icon>
             </button>
           </div>
@@ -55,7 +55,7 @@
             <iconify-icon icon="lucide:clock" style="font-size:16px;color:var(--accent)"></iconify-icon>{{ L.welcomeTime }}
           </div>
         </div>
-        <button onClick="{{ start }}" style="display:flex;align-items:center;justify-content:center;gap:12px;width:100%;min-height:66px;padding:0 28px;background:var(--accent);color:#FFFFFF;font-family:Poppins,system-ui,sans-serif;font-size:20px;font-weight:600;border:none;border-radius:12px;cursor:pointer;animation:glowPulse 2.4s ease-in-out infinite;" style-active="transform:scale(0.98);filter:brightness(0.94)">
+        <button onClick="{{ start }}" style="display:flex;align-items:center;justify-content:center;gap:12px;width:100%;min-height:66px;padding:0 28px;background:var(--accent);color:#FFFFFF;font-family:Poppins,system-ui,sans-serif;font-size:20px;font-weight:600;border:none;border-radius:999px;cursor:pointer;animation:glowPulse 2.4s ease-in-out infinite;" style-active="transform:scale(0.98);filter:brightness(0.94)">
           {{ L.welcomeCta }} <iconify-icon icon="lucide:arrow-right" style="font-size:24px"></iconify-icon>
         </button>
       </div>
@@ -353,7 +353,7 @@ class Component extends DCLogic {
   LVLCOLORS = ['#E5484D','#F5A623','#F2C94C','#56CCF2','#036EF2'];
 
   STR = {
-    pt: { tagline:'Tecnologia que Move Negócios', welcomeBadge:'Diagnóstico de Maturidade Digital', welcomeTitle:'Em que nível de maturidade digital está a sua organização?', welcomeSubtitle:'Responda a 7 perguntas rápidas e descubra o seu nível — com recomendações personalizadas das soluções TIS.', welcomeTime:'≈ 90 segundos', welcomeCta:'Iniciar Diagnóstico',
+    pt: { tagline:'Tecnologia que Move Negócios', welcomeBadge:'Diagnóstico de Maturidade Digital', welcomeTitle:'Em que nível de maturidade digital está a sua organização?', welcomeSubtitle:'Responda a 7 perguntas rápidas e descubra o seu nível com recomendações personalizadas das soluções TIS.', welcomeTime:'≈ 90 segundos', welcomeCta:'Iniciar Diagnóstico',
       tapHint:'Toque numa opção para avançar',
       contactBadge:'Quase lá', contactTitle:'Receba o relatório completo', contactSubtitle:'Deixe os seus dados para receber o relatório e o convite para a Sessão Estratégica.', fName:'Nome', fEmpresa:'Empresa', fCargo:'Cargo', fEmail:'Email', fTelefone:'Telefone', phName:'O seu nome', phEmpresa:'Nome da empresa', phCargo:'A sua função', phEmail:'nome@empresa.com', phTelefone:'+244 ___ ___ ___', consent:'Autorizo o tratamento dos meus dados e o contacto comercial pela TIS, nos termos da Política de Privacidade.', contactSubmit:'Ver o meu resultado', errRequired:'Campo obrigatório', errEmail:'Email inválido', errConsent:'É necessário o consentimento', offline:'Sem rede — guardado localmente e sincroniza automaticamente.',
       resultHeader:'O seu resultado', resultOf:'de 100', resultLevelLabel:'O seu nível', resultCharacteristics:'Características', resultPriorities:'Prioridades', resultSolutions:'Soluções TIS Recomendadas', nextStepLabel:'Próximo passo', ctaTitle:'Agende uma Sessão Estratégica Gratuita com Especialistas TIS', ctaSub:'Transformamos o seu diagnóstico num plano de ação concreto.', ctaButton:'Agendar Sessão Estratégica', qrCaption:'Aponte a câmara para agendar e receber o relatório', closing:'“A transformação digital não é apenas tecnologia. É estratégia, pessoas e inovação. A TIS ajuda a transformar desafios em resultados.”', resultRestart:'Recomeçar',
@@ -507,8 +507,8 @@ class Component extends DCLogic {
     const errConsent = st.triedSubmit && !st.consent;
     const canSubmit = !!(c.name.trim() && c.empresa.trim() && this.emailOk(c.email) && st.consent);
 
-    const langActive = {padding:'8px 15px',fontSize:'14px',fontWeight:600,fontFamily:'Poppins,system-ui,sans-serif',border:'none',cursor:'pointer',background:accent,color:'#04201C'};
-    const langInactive = {padding:'8px 15px',fontSize:'14px',fontWeight:600,fontFamily:'Poppins,system-ui,sans-serif',border:'none',cursor:'pointer',background:'transparent',color:th.muted};
+    const langActive = {padding:'8px 15px',fontSize:'14px',fontWeight:600,fontFamily:'Poppins,system-ui,sans-serif',border:'none',cursor:'pointer',background:accent,color:'#FFFFFF'};
+    const langInactive = {padding:'8px 15px',fontSize:'14px',fontWeight:600,fontFamily:'Poppins,system-ui,sans-serif',border:'none',cursor:'pointer',background:'#FFFFFF',color:'#0B1220'};
 
     return {
       rootStyle, L,
