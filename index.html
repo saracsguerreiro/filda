@@ -95,10 +95,10 @@
             <div style="display:flex;flex-direction:column;gap:12px;">
               <sc-for list="{{ ladderList }}" as="opt" hint-placeholder-count="5">
                 <button onClick="{{ opt.onSelect }}" style="{{ opt.style }}" style-active="transform:scale(0.99)">
-                  <div style="display:flex;flex-direction:column;gap:4px;flex:1;text-align:left;">
+                  <span style="font-size:11px;letter-spacing:4px;color:var(--accent);flex-shrink:0;">{{ opt.dots }}</span>
+                  <div style="display:flex;flex-direction:column;gap:3px;flex:1;text-align:left;">
                     <span style="font-size:18px;font-weight:600;color:var(--text);">{{ opt.title }}</span>
                     <span style="font-size:14px;color:var(--muted);">{{ opt.desc }}</span>
-                    <span style="font-size:13px;letter-spacing:3px;color:var(--accent);margin-top:3px;">{{ opt.dots }}</span>
                   </div>
                   <sc-if value="{{ opt.selected }}" hint-placeholder-val="{{ false }}"><iconify-icon icon="lucide:check" style="font-size:24px;color:var(--accent)"></iconify-icon></sc-if>
                 </button>
