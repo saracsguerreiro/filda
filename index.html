@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
+  <style>
+    html,body{margin:0;height:100%;background:#0B1220;}
+    *{box-sizing:border-box;}
+    input{outline:none;}
+    input::placeholder{color:var(--faint,#5f6f8c);}
+    iconify-icon{display:inline-block;line-height:0;}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes orbA{0%{transform:translate(0,0)}50%{transform:translate(46px,-34px)}100%{transform:translate(0,0)}}
+    @keyframes orbB{0%{transform:translate(0,0)}50%{transform:translate(-38px,44px)}100%{transform:translate(0,0)}}
+  </style>
+</helmet>
+<div style="{{ rootStyle }}">
+
+  <sc-if value="{{ isWelcome }}" hint-placeholder-val="{{ true }}">
+    <div style="position:absolute;inset:0;background:var(--welcomeGrad);"></div>
+    <div style="position:absolute;width:440px;height:440px;border-radius:50%;background:radial-gradient(circle,rgba(0,194,168,0.20),rgba(0,194,168,0) 70%);top:-90px;left:-70px;animation:orbA 14s ease-in-out infinite;"></div>
+    <div style="position:absolute;width:380px;height:380px;border-radius:50%;background:radial-gradient(circle,rgba(86,204,242,0.16),rgba(86,204,242,0) 70%);bottom:-70px;right:-50px;animation:orbB 17s ease-in-out infinite;"></div>
+    <div style="position:relative;height:100%;width:100%;display:flex;justify-content:center;">
+      <div style="width:100%;max-width:720px;height:100%;display:flex;flex-direction:column;padding:40px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="width:46px;height:46px;border-radius:11px;background:linear-gradient(135deg,var(--accent),var(--primary));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:21px;color:#04201C;">T</div>
+            <div style="display:flex;flex-direction:column;line-height:1;">
+              <span style="font-size:22px;font-weight:700;letter-spacing:1.5px;">TIS</span>
+              <span style="font-size:11px;font-weight:500;color:var(--muted);letter-spacing:.3px;margin-top:4px;">{{ L.tagline }}</span>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="display:flex;background:var(--surface);border:1px solid var(--line);border-radius:999px;overflow:hidden;">
+              <button onClick="{{ setLangPt }}" style="{{ langPtStyle }}">PT</button>
+              <button onClick="{{ setLangEn }}" style="{{ langEnStyle }}">EN</button>
+            </div>
+            <button onClick="{{ toggleTheme }}" style="width:42px;height:42px;border-radius:999px;background:var(--surface);border:1px solid var(--line);color:var(--muted);display:flex;align-items:center;justify-content:center;cursor:pointer;" style-active="transform:scale(0.95)">
+              <iconify-icon icon="{{ themeIcon }}" style="font-size:20px"></iconify-icon>
+            </button>
+          </div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:22px;">
+          <div style="font-size:14px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--eyebrow);">{{ L.welcomeBadge }}</div>
+          <h1 style="font-size:42px;font-weight:700;line-height:1.14;margin:0;letter-spacing:-0.5px;color:var(--text);">{{ L.welcomeTitle }}</h1>
+          <p style="font-size:19px;color:var(--muted);margin:0;line-height:1.5;max-width:560px;">{{ L.welcomeSubtitle }}</p>
+          <div style="display:inline-flex;align-items:center;gap:8px;align-self:flex-start;padding:9px 16px;border-radius:999px;background:var(--surface);border:1px solid var(--line);font-size:14px;color:var(--muted);font-weight:500;">
+            <iconify-icon icon="lucide:clock" style="font-size:16px;color:var(--accent)"></iconify-icon>{{ L.welcomeTime }}
+          </div>
+        </div>
+        <button onClick="{{ start }}" style="display:flex;align-items:center;justify-content:center;gap:12px;width:100%;min-height:66px;padding:0 28px;background:var(--accent);color:#04201C;font-family:Poppins,system-ui,sans-serif;font-size:20px;font-weight:600;border:none;border-radius:12px;cursor:pointer;" style-active="transform:scale(0.98);filter:brightness(0.94)">
+          {{ L.welcomeCta }} <iconify-icon icon="lucide:arrow-right" style="font-size:24px"></iconify-icon>
+        </button>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isQuestion }}" hint-placeholder-val="{{ false }}">
+    <div style="position:relative;height:100%;width:100%;display:flex;justify-content:center;">
+      <div ref="{{ setQStage }}" style="width:100%;max-width:720px;height:100%;display:flex;flex-direction:column;padding:40px 40px 30px;">
+        <div style="display:flex;align-items:center;gap:16px;">
+          <button onClick="{{ goBack }}" style="display:flex;align-items:center;justify-content:center;width:52px;height:52px;flex-shrink:0;border-radius:12px;background:var(--surface);border:2px solid var(--line);color:var(--muted);cursor:pointer;" style-active="transform:scale(0.96)">
+            <iconify-icon icon="lucide:arrow-left" style="font-size:24px"></iconify-icon>
+          </button>
+          <div style="flex:1;">
+            <div style="font-size:14px;font-weight:500;color:var(--muted);letter-spacing:.3px;margin-bottom:10px;">{{ qProgress }}</div>
+            <div style="display:flex;gap:6px;">
+              <sc-for list="{{ segments }}" as="seg" hint-placeholder-count="7"><div style="{{ seg.style }}"></div></sc-for>
+            </div>
+          </div>
+        </div>
+
+        <h1 style="font-size:32px;font-weight:700;line-height:1.2;margin:30px 0 2px;letter-spacing:-0.3px;color:var(--text);">{{ qTitle }}</h1>
+
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+          <sc-if value="{{ isSector }}" hint-placeholder-val="{{ false }}">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+              <sc-for list="{{ sectorList }}" as="opt" hint-placeholder-count="8">
+                <button onClick="{{ opt.onSelect }}" style="{{ opt.style }}" style-active="transform:scale(0.97)">
+                  <iconify-icon icon="{{ opt.icon }}" style="font-size:34px;color:{{ opt.iconColor }}"></iconify-icon>
+                  <span>{{ opt.label }}</span>
+                </button>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isLadder }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;gap:12px;">
+              <sc-for list="{{ ladderList }}" as="opt" hint-placeholder-count="5">
+                <button onClick="{{ opt.onSelect }}" style="{{ opt.style }}" style-active="transform:scale(0.99)">
+                  <div style="{{ opt.badgeStyle }}">{{ opt.letter }}</div>
+                  <div style="display:flex;flex-direction:column;gap:3px;flex:1;text-align:left;">
+                    <span style="font-size:18px;font-weight:600;color:var(--text);">{{ opt.title }}</span>
+                    <span style="font-size:14px;color:var(--muted);">{{ opt.desc }}</span>
+                  </div>
+                  <sc-if value="{{ opt.selected }}" hint-placeholder-val="{{ false }}"><iconify-icon icon="lucide:check" style="font-size:24px;color:var(--accent)"></iconify-icon></sc-if>
+                </button>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isSingle }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;gap:14px;">
+              <sc-for list="{{ singleList }}" as="opt" hint-placeholder-count="4">
+                <button onClick="{{ opt.onSelect }}" style="{{ opt.style }}" style-active="transform:scale(0.99)">
+                  <span style="flex:1;text-align:left;">{{ opt.label }}</span>
+                  <sc-if value="{{ opt.selected }}" hint-placeholder-val="{{ false }}"><iconify-icon icon="lucide:check-circle-2" style="font-size:26px;color:var(--accent)"></iconify-icon></sc-if>
+                </button>
+              </sc-for>
+            </div>
+          </sc-if>
+        </div>
+
+        <div style="text-align:center;color:var(--faint);font-size:13px;font-weight:500;">{{ L.tapHint }}</div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isContact }}" hint-placeholder-val="{{ false }}">
+    <div style="position:relative;height:100%;width:100%;display:flex;justify-content:center;overflow-y:auto;">
+      <div style="width:100%;max-width:720px;min-height:100%;display:flex;flex-direction:column;padding:40px 40px 32px;">
+        <button onClick="{{ goBack }}" style="display:flex;align-items:center;justify-content:center;width:52px;height:52px;flex-shrink:0;border-radius:12px;background:var(--surface);border:2px solid var(--line);color:var(--muted);cursor:pointer;" style-active="transform:scale(0.96)">
+          <iconify-icon icon="lucide:arrow-left" style="font-size:24px"></iconify-icon>
+        </button>
+        <div style="margin-top:24px;">
+          <div style="font-size:14px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--eyebrow);">{{ L.contactBadge }}</div>
+          <h1 style="font-size:32px;font-weight:700;line-height:1.2;margin:10px 0 6px;letter-spacing:-0.3px;color:var(--text);">{{ L.contactTitle }}</h1>
+          <p style="font-size:17px;color:var(--muted);margin:0;line-height:1.5;">{{ L.contactSubtitle }}</p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:16px;margin-top:26px;">
+          <label style="display:flex;flex-direction:column;gap:8px;">
+            <span style="font-size:14px;font-weight:600;color:var(--muted);">{{ L.fName }} *</span>
+            <input type="text" data-field="name" value="{{ cName }}" onChange="{{ onContactInput }}" placeholder="{{ L.phName }}" style="{{ inpName }}" style-focus="border-color:var(--accent)" />
+            <sc-if value="{{ errName }}" hint-placeholder-val="{{ false }}"><span style="font-size:13px;color:var(--danger);font-weight:500;">{{ L.errRequired }}</span></sc-if>
+          </label>
+          <label style="display:flex;flex-direction:column;gap:8px;">
+            <span style="font-size:14px;font-weight:600;color:var(--muted);">{{ L.fEmpresa }} *</span>
+            <input type="text" data-field="empresa" value="{{ cEmpresa }}" onChange="{{ onContactInput }}" placeholder="{{ L.phEmpresa }}" style="{{ inpEmpresa }}" style-focus="border-color:var(--accent)" />
+            <sc-if value="{{ errEmpresa }}" hint-placeholder-val="{{ false }}"><span style="font-size:13px;color:var(--danger);font-weight:500;">{{ L.errRequired }}</span></sc-if>
+          </label>
+          <label style="display:flex;flex-direction:column;gap:8px;">
+            <span style="font-size:14px;font-weight:600;color:var(--muted);">{{ L.fCargo }}</span>
+            <input type="text" data-field="cargo" value="{{ cCargo }}" onChange="{{ onContactInput }}" placeholder="{{ L.phCargo }}" style="{{ inpBase }}" style-focus="border-color:var(--accent)" />
+          </label>
+          <label style="display:flex;flex-direction:column;gap:8px;">
+            <span style="font-size:14px;font-weight:600;color:var(--muted);">{{ L.fEmail }} *</span>
+            <input type="email" data-field="email" value="{{ cEmail }}" onChange="{{ onContactInput }}" placeholder="{{ L.phEmail }}" style="{{ inpEmail }}" style-focus="border-color:var(--accent)" />
+            <sc-if value="{{ errEmail }}" hint-placeholder-val="{{ false }}"><span style="font-size:13px;color:var(--danger);font-weight:500;">{{ errEmailMsg }}</span></sc-if>
+          </label>
+          <label style="display:flex;flex-direction:column;gap:8px;">
+            <span style="font-size:14px;font-weight:600;color:var(--muted);">{{ L.fTelefone }}</span>
+            <input type="tel" data-field="telefone" value="{{ cTelefone }}" onChange="{{ onContactInput }}" placeholder="{{ L.phTelefone }}" style="{{ inpBase }}" style-focus="border-color:var(--accent)" />
+          </label>
+        </div>
+        <div onClick="{{ toggleConsent }}" style="display:flex;align-items:flex-start;gap:14px;margin-top:22px;cursor:pointer;padding:4px 0;">
+          <div style="{{ consentBoxStyle }}"><sc-if value="{{ consent }}" hint-placeholder-val="{{ false }}"><iconify-icon icon="lucide:check" style="font-size:20px;color:#04201C"></iconify-icon></sc-if></div>
+          <span style="font-size:14px;color:var(--muted);line-height:1.5;">{{ L.consent }}</span>
+        </div>
+        <sc-if value="{{ errConsent }}" hint-placeholder-val="{{ false }}"><span style="font-size:13px;color:var(--danger);font-weight:500;margin-top:6px;">{{ L.errConsent }}</span></sc-if>
+        <sc-if value="{{ showOffline }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;align-items:center;gap:10px;margin-top:16px;padding:12px 16px;background:rgba(245,166,35,0.12);border:1px solid #F5A623;border-radius:12px;font-size:14px;color:var(--text);">
+            <iconify-icon icon="lucide:wifi-off" style="font-size:18px;color:#F5A623"></iconify-icon>{{ L.offline }}
+          </div>
+        </sc-if>
+        <button onClick="{{ submit }}" style="{{ submitBtnStyle }}" style-active="transform:scale(0.98);filter:brightness(0.94)">
+          {{ L.contactSubmit }} <iconify-icon icon="lucide:arrow-right" style="font-size:24px"></iconify-icon>
+        </button>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isResult }}" hint-placeholder-val="{{ false }}">
+    <div style="position:relative;height:100%;width:100%;display:flex;justify-content:center;overflow-y:auto;">
+      <div style="width:100%;max-width:720px;min-height:100%;display:flex;flex-direction:column;padding:34px 40px 40px;gap:20px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:36px;height:36px;border-radius:9px;background:linear-gradient(135deg,var(--accent),var(--primary));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;color:#04201C;">T</div>
+            <span style="font-size:18px;font-weight:700;letter-spacing:1.5px;color:var(--text);">TIS</span>
+          </div>
+          <span style="font-size:13px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);">{{ L.resultHeader }}</span>
+        </div>
+
+        <div style="display:flex;flex-direction:column;align-items:center;animation:fadeUp .5s .05s both;">
+          <div style="position:relative;width:260px;height:260px;">
+            <svg width="260" height="260" viewBox="0 0 260 260">
+              <circle cx="130" cy="130" r="110" fill="none" stroke="var(--track)" strokeWidth="18"></circle>
+              <circle cx="130" cy="130" r="110" fill="none" stroke="{{ levelColor }}" strokeWidth="18" strokeLinecap="round" strokeDasharray="{{ ringCirc }}" strokeDashoffset="{{ ringOffset }}" transform="rotate(-90 130 130)"></circle>
+            </svg>
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+              <div style="font-size:66px;font-weight:700;line-height:1;letter-spacing:-1px;color:var(--text);">{{ displayScore }}</div>
+              <div style="font-size:15px;color:var(--muted);font-weight:500;margin-top:4px;">{{ L.resultOf }}</div>
+            </div>
+          </div>
+          <div style="font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:12px;">{{ L.resultLevelLabel }}</div>
+          <div style="font-size:36px;font-weight:700;margin-top:2px;text-align:center;letter-spacing:-0.5px;color:{{ levelColor }}">{{ levelName }}</div>
+          <p style="font-size:17px;color:var(--muted);text-align:center;margin:10px 0 0;max-width:520px;line-height:1.5;">{{ profile }}</p>
+        </div>
+
+        <div style="background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px 24px;animation:fadeUp .5s .12s both;">
+          <h2 style="font-size:20px;font-weight:600;margin:0;color:var(--text);">{{ L.resultCharacteristics }}</h2>
+          <div style="display:flex;flex-direction:column;gap:12px;margin-top:16px;">
+            <sc-for list="{{ traits }}" as="t" hint-placeholder-count="4">
+              <div style="display:flex;align-items:flex-start;gap:12px;">
+                <iconify-icon icon="lucide:check" style="font-size:22px;color:var(--accent);flex-shrink:0;margin-top:1px;"></iconify-icon>
+                <span style="font-size:17px;color:var(--text);line-height:1.4;">{{ t }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px 24px;animation:fadeUp .5s .19s both;">
+          <h2 style="font-size:20px;font-weight:600;margin:0;color:var(--text);">{{ L.resultPriorities }}</h2>
+          <p style="font-size:14px;color:var(--muted);margin:6px 0 0;">{{ prioritiesSub }}</p>
+          <div style="display:flex;flex-direction:column;gap:12px;margin-top:16px;">
+            <sc-for list="{{ priorities }}" as="p" hint-placeholder-count="3">
+              <div style="display:flex;align-items:flex-start;gap:12px;">
+                <iconify-icon icon="lucide:target" style="font-size:22px;color:#56CCF2;flex-shrink:0;margin-top:1px;"></iconify-icon>
+                <span style="font-size:17px;color:var(--text);line-height:1.4;">{{ p }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="animation:fadeUp .5s .26s both;">
+          <h2 style="font-size:20px;font-weight:600;margin:0 0 4px;color:var(--text);">{{ L.resultSolutions }}</h2>
+          <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:14px;">
+            <sc-for list="{{ solutions }}" as="s" hint-placeholder-count="4">
+              <div style="display:flex;align-items:center;gap:8px;padding:12px 16px;background:var(--surface2);border:1px solid var(--line);border-radius:999px;font-size:15px;font-weight:500;color:var(--text);">
+                <iconify-icon icon="lucide:sparkles" style="font-size:18px;color:var(--accent)"></iconify-icon>{{ s }}
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="background:var(--ctaGrad);border:1px solid var(--ctaBorder);border-radius:18px;padding:26px;animation:fadeUp .5s .32s both;">
+          <div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#7DF0E1;">
+            <iconify-icon icon="lucide:rocket" style="font-size:18px"></iconify-icon>{{ nextStepLine }}
+          </div>
+          <h2 style="font-size:24px;font-weight:700;margin:12px 0 6px;line-height:1.25;letter-spacing:-0.3px;color:#FFFFFF;">{{ L.ctaTitle }}</h2>
+          <p style="color:#C9D6EC;font-size:16px;margin:0 0 20px;line-height:1.5;">{{ L.ctaSub }}</p>
+          <button onClick="{{ book }}" style="display:flex;align-items:center;justify-content:center;gap:12px;width:100%;min-height:64px;padding:0 24px;background:var(--accent);color:#04201C;font-family:Poppins,system-ui,sans-serif;font-size:19px;font-weight:600;border:none;border-radius:12px;cursor:pointer;" style-active="transform:scale(0.98);filter:brightness(0.94)">
+            {{ L.ctaButton }} <iconify-icon icon="lucide:calendar-check" style="font-size:22px"></iconify-icon>
+          </button>
+          <sc-if value="{{ qr }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;align-items:center;gap:16px;margin-top:20px;padding:16px;background:#FFFFFF;border-radius:14px;">
+              <img src="{{ qr }}" alt="QR" style="width:92px;height:92px;display:block;flex-shrink:0;" />
+              <span style="font-size:15px;color:#0B1220;font-weight:500;line-height:1.4;">{{ L.qrCaption }}</span>
+            </div>
+          </sc-if>
+        </div>
+
+        <p style="text-align:center;color:var(--muted);font-size:16px;line-height:1.6;font-style:italic;margin:6px 0 0;">{{ L.closing }}</p>
+
+        <button onClick="{{ restart }}" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:56px;background:transparent;border:2px solid var(--line);border-radius:12px;color:var(--muted);font-family:Poppins,system-ui,sans-serif;font-size:17px;font-weight:600;cursor:pointer;" style-active="transform:scale(0.99)">
+          <iconify-icon icon="lucide:rotate-ccw" style="font-size:20px"></iconify-icon>{{ L.resultRestart }}
+        </button>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isThanks }}" hint-placeholder-val="{{ false }}">
+    <div style="position:relative;height:100%;width:100%;display:flex;align-items:center;justify-content:center;padding:40px;">
+      <div style="max-width:560px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:20px;">
+        <div style="width:96px;height:96px;border-radius:50%;background:rgba(0,194,168,0.14);display:flex;align-items:center;justify-content:center;animation:fadeUp .5s both;">
+          <iconify-icon icon="lucide:check" style="font-size:52px;color:var(--accent)"></iconify-icon>
+        </div>
+        <h1 style="font-size:36px;font-weight:700;margin:0;letter-spacing:-0.5px;color:var(--text);">{{ L.thanksTitle }}</h1>
+        <p style="font-size:19px;color:var(--muted);line-height:1.6;margin:0;">{{ L.thanksSub }}</p>
+        <div style="font-size:14px;font-weight:600;letter-spacing:1px;color:var(--accent);">{{ L.thanksTagline }}</div>
+        <button onClick="{{ restart }}" style="display:flex;align-items:center;justify-content:center;gap:12px;min-width:260px;min-height:64px;padding:0 32px;background:var(--accent);color:#04201C;font-family:Poppins,system-ui,sans-serif;font-size:19px;font-weight:600;border:none;border-radius:12px;cursor:pointer;margin-top:6px;" style-active="transform:scale(0.98);filter:brightness(0.94)">
+          <iconify-icon icon="lucide:rotate-ccw" style="font-size:22px"></iconify-icon>{{ L.thanksButton }}
+        </button>
+        <span style="font-size:13px;color:var(--faint);">{{ L.thanksAutoreset }}</span>
+      </div>
+    </div>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:820,&quot;height&quot;:1180},&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dark&quot;,&quot;light&quot;],&quot;default&quot;:&quot;dark&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Aparência&quot;},&quot;lang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;pt&quot;,&quot;en&quot;],&quot;default&quot;:&quot;pt&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Aparência&quot;},&quot;primaryColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#0A4DA2&quot;,&quot;options&quot;:[&quot;#0A4DA2&quot;,&quot;#063B7E&quot;,&quot;#1A56A8&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Aparência&quot;},&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#00C2A8&quot;,&quot;options&quot;:[&quot;#00C2A8&quot;,&quot;#00A896&quot;,&quot;#12B7A6&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Aparência&quot;},&quot;resetSeconds&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:40,&quot;min&quot;:10,&quot;max&quot;:120,&quot;unit&quot;:&quot;s&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Comportamento do quiosque&quot;},&quot;advanceDelay&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:360,&quot;min&quot;:0,&quot;max&quot;:1200,&quot;step&quot;:20,&quot;unit&quot;:&quot;ms&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Comportamento do quiosque&quot;}}">
+class Component extends DCLogic {
+  state = { screen:'welcome', qIndex:0, answers:{}, contact:{name:'',empresa:'',cargo:'',email:'',telefone:''}, consent:false, displayScore:0, triedSubmit:false, lang:'pt', theme:'dark', online:true, qr:null };
+
+  themes = {
+    dark:  { bg:'#0B1220', text:'#F5F8FC', muted:'#A9B8D0', surface:'#111A2B', surface2:'#1A2740', line:'#2A3A57', faint:'#5f6f8c', eyebrow:'#2FD9C4', track:'#1A2740', inputBg:'#111A2B',
+      welcomeGrad:'radial-gradient(1200px 820px at 50% -12%,#0A4DA2 0%,rgba(10,77,162,0) 62%),#0B1220', ctaGrad:'linear-gradient(135deg,#0A4DA2,#063B7E)', ctaBorder:'#2A6FBF' },
+    light: { bg:'#EEF3FA', text:'#0B1220', muted:'#51617A', surface:'#FFFFFF', surface2:'#F2F6FC', line:'#D8E1EF', faint:'#8595AD', eyebrow:'#0A4DA2', track:'#DCE6F3', inputBg:'#FFFFFF',
+      welcomeGrad:'radial-gradient(1200px 820px at 50% -12%,#CFE0F5 0%,rgba(207,224,245,0) 62%),#EEF3FA', ctaGrad:'linear-gradient(135deg,#0A4DA2,#063B7E)', ctaBorder:'#2A6FBF' },
+  };
+
+  SECTORS = [
+    { icon:'lucide:heart-pulse',  pt:'Saúde',            en:'Health',              focus:{pt:'Conformidade e segurança de dados clínicos', en:'Clinical data compliance & security'} },
+    { icon:'lucide:graduation-cap', pt:'Educação',       en:'Education',           focus:{pt:'Plataformas digitais de aprendizagem', en:'Digital learning platforms'} },
+    { icon:'lucide:landmark',     pt:'Banca & Seguros',  en:'Banking & Insurance', focus:{pt:'Cibersegurança e prevenção de fraude', en:'Cybersecurity & fraud prevention'} },
+    { icon:'lucide:building-2',   pt:'Governo',          en:'Government',          focus:{pt:'Serviços digitais ao cidadão', en:'Digital citizen services'} },
+    { icon:'lucide:zap',          pt:'Energia',          en:'Energy',              focus:{pt:'Monitorização e IoT operacional', en:'Operational IoT & monitoring'} },
+    { icon:'lucide:factory',      pt:'Indústria',        en:'Industry',            focus:{pt:'Automação industrial e dados', en:'Industrial automation & data'} },
+    { icon:'lucide:radio-tower',  pt:'Telecom',          en:'Telecom',             focus:{pt:'Escala, rede e experiência do cliente', en:'Scale, network & customer experience'} },
+    { icon:'lucide:shapes',       pt:'Outro',            en:'Other',               focus:null },
+  ];
+
+  MATURITY = [
+    { letter:'A', pts:0,  pt:{title:'Maioritariamente manual', desc:'Pouca automação'}, en:{title:'Mostly manual', desc:'Little automation'} },
+    { letter:'B', pts:10, pt:{title:'Alguns sistemas digitais', desc:'Processos parcialmente integrados'}, en:{title:'Some digital systems', desc:'Partially integrated processes'} },
+    { letter:'C', pts:20, pt:{title:'Sistemas integrados', desc:'Dados disponíveis'}, en:{title:'Integrated systems', desc:'Data available'} },
+    { letter:'D', pts:30, pt:{title:'Organização Data Driven', desc:'Decisões orientadas por dados'}, en:{title:'Data Driven organization', desc:'Data-led decisions'} },
+    { letter:'E', pts:40, pt:{title:'IA integrada ao negócio', desc:'Automação avançada'}, en:{title:'AI embedded in business', desc:'Advanced automation'} },
+  ];
+
+  CHALLENGES = [
+    { pt:'Crescer',                   en:'Grow',                    priorities:{pt:['IA','Analytics','Consultoria'], en:['AI','Analytics','Consulting']} },
+    { pt:'Melhorar produtividade',    en:'Improve productivity',    priorities:{pt:['Automação','Copilots','Analytics'], en:['Automation','Copilots','Analytics']} },
+    { pt:'Reduzir custos',            en:'Reduce costs',            priorities:{pt:['Cloud','Managed Services','Automação'], en:['Cloud','Managed Services','Automation']} },
+    { pt:'Proteger o negócio',        en:'Protect the business',    priorities:{pt:['Cybersecurity','SOC','Backup & Continuidade'], en:['Cybersecurity','SOC','Backup & Continuity']} },
+    { pt:'Modernizar infraestruturas',en:'Modernize infrastructure',priorities:{pt:['Cloud','Data Center','Infraestruturas Resilientes'], en:['Cloud','Data Center','Resilient Infrastructure']} },
+    { pt:'Capacitar equipas',         en:'Upskill teams',           priorities:{pt:['Academia TIS','IA para Executivos','Certificações'], en:['TIS Academy','AI for Executives','Certifications']} },
+  ];
+
+  QUESTIONS = [
+    { id:'setor', kind:'sector', title:{pt:'Qual o sector da sua organização?', en:'What is your organization\u2019s sector?'} },
+    { id:'maturidade', kind:'ladder', title:{pt:'Como classifica a maturidade digital da sua organização?', en:'How do you rate your organization\u2019s digital maturity?'} },
+    { id:'desafio', kind:'single', title:{pt:'Qual o seu maior desafio atual?', en:'What is your biggest current challenge?'} },
+    { id:'ia', kind:'single', title:{pt:'A sua organização utiliza IA?', en:'Does your organization use AI?'}, options:{pt:['Não','Estamos a estudar','Em alguns processos','De forma estratégica'], en:['No','We are exploring','In some processes','Strategically']}, points:[0,5,10,20] },
+    { id:'ciber', kind:'single', title:{pt:'Como avalia a sua cibersegurança?', en:'How do you rate your cybersecurity?'}, options:{pt:['Não sei','Precisa melhorar','Adequada','Muito madura'], en:['I don\u2019t know','Needs improvement','Adequate','Very mature']}, points:[0,5,10,15] },
+    { id:'infra', kind:'single', title:{pt:'Onde estão os seus sistemas?', en:'Where are your systems?'}, options:{pt:['Não sei','On Premise','Cloud','Híbrido'], en:['I don\u2019t know','On Premise','Cloud','Hybrid']}, points:[0,5,10,15] },
+    { id:'formacao', kind:'single', title:{pt:'Os colaboradores recebem formação contínua?', en:'Do employees receive continuous training?'}, options:{pt:['Não','Parcialmente','Sim'], en:['No','Partially','Yes']}, points:[0,5,10] },
+  ];
+
+  LEVELS = [
+    { min:0, max:20, color:'#E5484D',
+      pt:{ name:'Nível Inicial', profile:'A sua organização está a iniciar a jornada digital.', traits:['Muitos processos manuais','Baixa integração entre sistemas','Pouco uso de dados','Infraestruturas tradicionais'], solutions:['Consultoria em Transformação Digital','Academia TIS','Cloud e Infraestrutura','Diagnóstico de Maturidade'], nextStep:'Workshop Executivo Gratuito' },
+      en:{ name:'Initial Level', profile:'Your organization is starting its digital journey.', traits:['Many manual processes','Low integration between systems','Little use of data','Traditional infrastructure'], solutions:['Digital Transformation Consulting','TIS Academy','Cloud & Infrastructure','Maturity Diagnostic'], nextStep:'Free Executive Workshop' } },
+    { min:21, max:40, color:'#F5A623',
+      pt:{ name:'Digital em Evolução', profile:'Já existem sistemas digitais, mas ainda em áreas isoladas.', traits:['Alguns sistemas implementados','Áreas ainda isoladas','Pouca integração','Necessidade crescente de automação'], solutions:['Integração e Interoperabilidade','Cloud','Cybersecurity','Academia TIS'], nextStep:'Assessment de Arquitetura' },
+      en:{ name:'Digital in Evolution', profile:'Digital systems exist, but still in isolated areas.', traits:['Some systems implemented','Still isolated areas','Little integration','Growing need for automation'], solutions:['Integration & Interoperability','Cloud','Cybersecurity','TIS Academy'], nextStep:'Architecture Assessment' } },
+    { min:41, max:60, color:'#F2C94C',
+      pt:{ name:'Nível Integrado', profile:'Sistemas conectados e operações digitais à procura de escala.', traits:['Sistemas conectados','Operações digitais','Necessidade de escalar','Foco em eficiência'], solutions:['Data Center','Cloud Híbrida','Banco de Dados','Managed Services','Cybersecurity'], nextStep:'Roadmap de Modernização' },
+      en:{ name:'Integrated Level', profile:'Connected systems and digital operations seeking scale.', traits:['Connected systems','Digital operations','Need to scale','Focus on efficiency'], solutions:['Data Center','Hybrid Cloud','Database','Managed Services','Cybersecurity'], nextStep:'Modernization Roadmap' } },
+    { min:61, max:80, color:'#56CCF2',
+      pt:{ name:'Data Driven', profile:'Cultura analítica com decisões orientadas por dados.', traits:['Dados disponíveis e dashboards','Cultura analítica','Decisões orientadas por dados','Procura por IA'], solutions:['Analytics','IA','Banco de Dados','Data Governance','IA Generativa'], nextStep:'Assessment IA' },
+      en:{ name:'Data Driven', profile:'Analytical culture with data-driven decisions.', traits:['Data available and dashboards','Analytical culture','Data-driven decisions','Seeking AI'], solutions:['Analytics','AI','Database','Data Governance','Generative AI'], nextStep:'AI Assessment' } },
+    { min:81, max:100, color:'#00C2A8',
+      pt:{ name:'AI Ready', profile:'IA integrada ao negócio e automação avançada.', traits:['IA integrada ao negócio','Automação avançada','Dados estruturados','Cultura digital avançada'], solutions:['AI Lab','IA Generativa','Copilots','Automação Inteligente','Cyber para IA','Academia TIS Executiva'], nextStep:'Workshop Estratégico de IA' },
+      en:{ name:'AI Ready', profile:'AI embedded in the business and advanced automation.', traits:['AI embedded in the business','Advanced automation','Structured data','Advanced digital culture'], solutions:['AI Lab','Generative AI','Copilots','Intelligent Automation','Cyber for AI','TIS Executive Academy'], nextStep:'AI Strategy Workshop' } },
+  ];
+
+  LVLCOLORS = ['#E5484D','#F5A623','#F2C94C','#56CCF2','#00C2A8'];
+
+  STR = {
+    pt: { tagline:'Tecnologia que Move Negócios', welcomeBadge:'Diagnóstico de Maturidade Digital', welcomeTitle:'Em que nível de maturidade digital está a sua organização?', welcomeSubtitle:'Responda a 7 perguntas rápidas e descubra o seu nível — com recomendações personalizadas das soluções TIS.', welcomeTime:'≈ 90 segundos', welcomeCta:'Iniciar Diagnóstico',
+      tapHint:'Toque numa opção para avançar',
+      contactBadge:'Quase lá', contactTitle:'Receba o relatório completo', contactSubtitle:'Deixe os seus dados para receber o relatório e o convite para a Sessão Estratégica.', fName:'Nome', fEmpresa:'Empresa', fCargo:'Cargo', fEmail:'Email', fTelefone:'Telefone', phName:'O seu nome', phEmpresa:'Nome da empresa', phCargo:'A sua função', phEmail:'nome@empresa.com', phTelefone:'+244 ___ ___ ___', consent:'Autorizo o tratamento dos meus dados e o contacto comercial pela TIS, nos termos da Política de Privacidade.', contactSubmit:'Ver o meu resultado', errRequired:'Campo obrigatório', errEmail:'Email inválido', errConsent:'É necessário o consentimento', offline:'Sem rede — guardado localmente e sincroniza automaticamente.',
+      resultHeader:'O seu resultado', resultOf:'de 100', resultLevelLabel:'O seu nível', resultCharacteristics:'Características', resultPriorities:'Prioridades', resultSolutions:'Soluções TIS Recomendadas', nextStepLabel:'Próximo passo', ctaTitle:'Agende uma Sessão Estratégica Gratuita com Especialistas TIS', ctaSub:'Transformamos o seu diagnóstico num plano de ação concreto.', ctaButton:'Agendar Sessão Estratégica', qrCaption:'Aponte a câmara para agendar e receber o relatório', closing:'“A transformação digital não é apenas tecnologia. É estratégia, pessoas e inovação. A TIS ajuda a transformar desafios em resultados.”', resultRestart:'Recomeçar',
+      thanksTitle:'Obrigado!', thanksSub:'Um especialista TIS entrará em contacto para agendar a sua Sessão Estratégica.', thanksTagline:'Tecnologia que Move Negócios.', thanksButton:'Novo Diagnóstico', thanksAutoreset:'Reinicia automaticamente em breve…' },
+    en: { tagline:'Technology that Moves Business', welcomeBadge:'Digital Maturity Diagnostic', welcomeTitle:'What is your organization\u2019s level of digital maturity?', welcomeSubtitle:'Answer 7 quick questions and discover your level — with personalized TIS solution recommendations.', welcomeTime:'≈ 90 seconds', welcomeCta:'Start Diagnostic',
+      tapHint:'Tap an option to continue',
+      contactBadge:'Almost there', contactTitle:'Get your full report', contactSubtitle:'Leave your details to receive the report and your invitation to the Strategy Session.', fName:'Name', fEmpresa:'Company', fCargo:'Role', fEmail:'Email', fTelefone:'Phone', phName:'Your name', phEmpresa:'Company name', phCargo:'Your role', phEmail:'name@company.com', phTelefone:'+244 ___ ___ ___', consent:'I authorize TIS to process my data and contact me commercially, under the Privacy Policy.', contactSubmit:'See my result', errRequired:'Required field', errEmail:'Invalid email', errConsent:'Consent is required', offline:'Offline — saved locally, will sync automatically.',
+      resultHeader:'Your result', resultOf:'out of 100', resultLevelLabel:'Your level', resultCharacteristics:'Characteristics', resultPriorities:'Priorities', resultSolutions:'Recommended TIS Solutions', nextStepLabel:'Next step', ctaTitle:'Book a Free Strategy Session with TIS Specialists', ctaSub:'We turn your diagnosis into a concrete action plan.', ctaButton:'Book Strategy Session', qrCaption:'Scan to book and receive your report', closing:'“Digital transformation is not only technology. It is strategy, people and innovation. TIS helps turn challenges into results.”', resultRestart:'Restart',
+      thanksTitle:'Thank you!', thanksSub:'A TIS specialist will contact you to schedule your Strategy Session.', thanksTagline:'Technology that Moves Business.', thanksButton:'New Diagnostic', thanksAutoreset:'Restarts automatically shortly…' },
+  };
+
+  componentDidMount(){
+    if(this.props.lang && !this._manualLang) this.setState({lang:this.props.lang});
+    if(this.props.theme && !this._manualTheme) this.setState({theme:this.props.theme});
+    if(typeof navigator!=='undefined') this.setState({online:navigator.onLine});
+    this._onl = ()=>this.setState({online:navigator.onLine});
+    window.addEventListener('online', this._onl);
+    window.addEventListener('offline', this._onl);
+    this._bump = ()=>{
+      clearTimeout(this._idle);
+      if(this.state.screen!=='welcome'){
+        const secs = this.props.resetSeconds != null ? this.props.resetSeconds : 40;
+        this._idle = setTimeout(()=>this.restart(), secs*1000);
+      }
+    };
+    document.addEventListener('pointerdown', this._bump, true);
+    document.addEventListener('keydown', this._bump, true);
+  }
+
+  componentWillUnmount(){
+    clearTimeout(this._advTimer); clearTimeout(this._idle); cancelAnimationFrame(this._raf);
+    if(this._onl){ window.removeEventListener('online', this._onl); window.removeEventListener('offline', this._onl); }
+    if(this._bump){ document.removeEventListener('pointerdown', this._bump, true); document.removeEventListener('keydown', this._bump, true); }
+  }
+
+  componentDidUpdate(pp, ps){
+    if(!this._manualLang && this.props.lang && this.props.lang!==this.state.lang) this.setState({lang:this.props.lang});
+    if(!this._manualTheme && this.props.theme && this.props.theme!==this.state.theme) this.setState({theme:this.props.theme});
+    if(this.qStage && this.state.screen==='q' && (ps.screen!=='q' || ps.qIndex!==this.state.qIndex)){
+      const from = this._dir==='back' ? '-42px' : '42px';
+      try { this.qStage.animate([{opacity:0,transform:'translateX('+from+')'},{opacity:1,transform:'translateX(0)'}],{duration:260,easing:'cubic-bezier(.2,.8,.2,1)'}); } catch(e){}
+    }
+    if(ps.screen!==this.state.screen || ps.qIndex!==this.state.qIndex){ if(this._bump) this._bump(); }
+  }
+
+  currentQ(){ return this.QUESTIONS[this.state.qIndex]; }
+  optionsFor(q){ const lang=this.state.lang; return q.id==='desafio' ? this.CHALLENGES.map(c=>c[lang]) : (q.options ? q.options[lang] : []); }
+
+  select(i){
+    const id = this.currentQ().id;
+    this.setState(s=>({ answers:{...s.answers, [id]:i} }));
+    clearTimeout(this._advTimer);
+    const delay = this.props.advanceDelay != null ? this.props.advanceDelay : 360;
+    this._advTimer = setTimeout(()=>{ this._dir='fwd'; this.advance(); }, delay);
+  }
+  advance(){ if(this.state.qIndex < 6) this.setState(s=>({qIndex:s.qIndex+1})); else this.setState({screen:'contact'}); }
+  back(){ this._dir='back'; if(this.state.qIndex>0) this.setState(s=>({qIndex:s.qIndex-1})); else this.setState({screen:'welcome'}); }
+
+  scoreCompute(){
+    const a = this.state.answers; let s = 0;
+    if(a.maturidade!=null) s += this.MATURITY[a.maturidade].pts;
+    ['ia','ciber','infra','formacao'].forEach(k=>{ const q=this.QUESTIONS.find(x=>x.id===k); if(a[k]!=null) s += q.points[a[k]]; });
+    return s;
+  }
+  levelFor(sc){ return this.LEVELS.find(l=>sc>=l.min && sc<=l.max) || this.LEVELS[0]; }
+
+  animateScore(){
+    cancelAnimationFrame(this._raf);
+    const target = this.scoreCompute();
+    const t0 = performance.now();
+    this.setState({displayScore:0});
+    const tick = (t)=>{ const p=Math.min(1,(t-t0)/1000); const e=1-Math.pow(1-p,3); this.setState({displayScore:Math.round(target*e)}); if(p<1) this._raf=requestAnimationFrame(tick); };
+    this._raf = requestAnimationFrame(tick);
+  }
+
+  genQR(){
+    const tryGen=(n)=>{
+      if(typeof window.qrcode!=='function'){ if(n>0) setTimeout(()=>tryGen(n-1), 300); return; }
+      try {
+        const sc=this.scoreCompute(); const lv=this.levelFor(sc);
+        const url='https://tis.co.ao/sessao-estrategica?ref=filda2026&nivel='+encodeURIComponent(lv.pt.name)+'&score='+sc;
+        const qr=window.qrcode(0,'M'); qr.addData(url); qr.make();
+        this.setState({qr:qr.createDataURL(6,8)});
+      } catch(e){}
+    };
+    tryGen(10);
+  }
+
+  emailOk(v){ return /.+@.+\..+/.test((v||'').trim()); }
+
+  submitContact(){
+    const c = this.state.contact;
+    const valid = c.name.trim() && c.empresa.trim() && this.emailOk(c.email) && this.state.consent;
+    if(!valid){ this.setState({triedSubmit:true}); return; }
+    const sc=this.scoreCompute(); const lv=this.levelFor(sc);
+    try{ const q=JSON.parse(localStorage.getItem('tis_diag_queue')||'[]'); q.push({...c, score:sc, level:lv.pt.name, lang:this.state.lang, ts:Date.now(), synced:navigator.onLine}); localStorage.setItem('tis_diag_queue', JSON.stringify(q)); }catch(e){}
+    this.setState({screen:'result', triedSubmit:false, qr:null}, ()=>{ this.animateScore(); this.genQR(); });
+  }
+
+  restart(){
+    clearTimeout(this._idle); this._dir='fwd';
+    this.setState({ screen:'welcome', qIndex:0, answers:{}, contact:{name:'',empresa:'',cargo:'',email:'',telefone:''}, consent:false, displayScore:0, triedSubmit:false, qr:null });
+  }
+
+  renderVals(){
+    const st = this.state; const lang = st.lang;
+    const th = this.themes[st.theme] || this.themes.dark;
+    const primary = this.props.primaryColor || '#0A4DA2';
+    const accent = this.props.accentColor || '#00C2A8';
+    const L = this.STR[lang];
+
+    const rootStyle = { position:'fixed', inset:0, overflow:'hidden', fontFamily:'Poppins,system-ui,sans-serif', color:th.text, background:th.bg,
+      '--bg':th.bg, '--text':th.text, '--muted':th.muted, '--surface':th.surface, '--surface2':th.surface2, '--line':th.line, '--faint':th.faint, '--eyebrow':th.eyebrow, '--track':th.track, '--inputBg':th.inputBg, '--primary':primary, '--primaryStrong':'#063B7E', '--accent':accent, '--danger':'#E5484D', '--welcomeGrad':th.welcomeGrad, '--ctaGrad':th.ctaGrad, '--ctaBorder':th.ctaBorder };
+
+    const q = this.currentQ(); const ans = st.answers[q.id];
+
+    const optBase = {display:'flex',alignItems:'center',gap:'16px',width:'100%',padding:'20px 22px',minHeight:'72px',borderRadius:'12px',cursor:'pointer',fontFamily:'Poppins,system-ui,sans-serif',fontSize:'20px',fontWeight:500,lineHeight:1.3,transition:'transform .12s ease,background .15s,border-color .15s',boxSizing:'border-box'};
+    const norm = {background:th.surface, border:'2px solid '+th.line, color:th.text};
+    const sel = {background:'rgba(0,194,168,0.14)', border:'2px solid '+accent, color:th.text, boxShadow:'0 0 0 4px rgba(0,194,168,0.10)'};
+    const sectorBase = {display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',gap:'12px',padding:'20px 10px',minHeight:'124px',borderRadius:'16px',cursor:'pointer',fontFamily:'Poppins,system-ui,sans-serif',fontSize:'16px',fontWeight:600,textAlign:'center',transition:'transform .12s,background .15s,border-color .15s',boxSizing:'border-box'};
+    const ladderBase = {display:'flex',alignItems:'center',gap:'18px',width:'100%',padding:'16px 20px',minHeight:'84px',borderRadius:'14px',cursor:'pointer',fontFamily:'Poppins,system-ui,sans-serif',transition:'transform .12s,background .15s,border-color .15s',boxSizing:'border-box'};
+
+    const sectorList = this.SECTORS.map((s,i)=>{ const isSel=ans===i; return { label:s[lang], icon:s.icon, iconColor:isSel?'#7DF0E1':accent, selected:isSel, style:{...sectorBase, ...(isSel?sel:norm)}, onSelect:()=>this.select(i) }; });
+    const ladderList = this.MATURITY.map((m,i)=>{ const isSel=ans===i; return { letter:m.letter, title:m[lang].title, desc:m[lang].desc, selected:isSel, badgeStyle:{flexShrink:0,width:'52px',height:'52px',borderRadius:'12px',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'26px',fontWeight:700,background:this.LVLCOLORS[i],color:'#0B1220'}, style:{...ladderBase, ...(isSel?sel:norm)}, onSelect:()=>this.select(i) }; });
+    const opts = this.optionsFor(q);
+    const singleList = opts.map((label,i)=>{ const isSel=ans===i; return { label, selected:isSel, style:{...optBase, ...(isSel?sel:norm)}, onSelect:()=>this.select(i) }; });
+
+    const qNum = st.qIndex+1;
+    const segments = Array.from({length:7},(_,i)=>({ style:{flex:1,height:'6px',borderRadius:'999px',background:i<qNum?accent:th.track,transition:'background .3s'} }));
+    const qProgress = lang==='pt' ? ('Pergunta '+qNum+' de 7') : ('Question '+qNum+' of 7');
+
+    const score = this.scoreCompute(); const level = this.levelFor(score); const lv = level[lang];
+    const ringCirc = 2*Math.PI*110; const ringOffset = ringCirc*(1 - st.displayScore/100);
+    const ch = st.answers.desafio; const sectorIdx = st.answers.setor;
+    let priorities = ch!=null ? [...this.CHALLENGES[ch].priorities[lang]] : (lang==='pt'?['Definir prioridades de transformação','Alinhar tecnologia com a estratégia']:['Define transformation priorities','Align technology with strategy']);
+    if(sectorIdx!=null && this.SECTORS[sectorIdx].focus) priorities = [this.SECTORS[sectorIdx].focus[lang], ...priorities];
+    priorities = priorities.slice(0,4);
+    const challengeLabel = ch!=null ? this.CHALLENGES[ch][lang] : '—';
+    const prioritiesSub = (lang==='pt'?'Com base no seu desafio: ':'Based on your challenge: ') + challengeLabel;
+    const nextStepLine = L.nextStepLabel + ' · ' + lv.nextStep;
+
+    const inputBase = {width:'100%',minHeight:'58px',padding:'0 18px',background:th.inputBg,border:'2px solid '+th.line,borderRadius:'12px',color:th.text,fontFamily:'Poppins,system-ui,sans-serif',fontSize:'18px'};
+    const inputErr = {...inputBase, border:'2px solid #E5484D'};
+    const c = st.contact;
+    const errName = st.triedSubmit && !c.name.trim();
+    const errEmpresa = st.triedSubmit && !c.empresa.trim();
+    const emailEmpty = !c.email.trim();
+    const emailBad = !emailEmpty && !this.emailOk(c.email);
+    const errEmail = (st.triedSubmit && emailEmpty) || emailBad;
+    const errEmailMsg = emailEmpty ? L.errRequired : L.errEmail;
+    const errConsent = st.triedSubmit && !st.consent;
+    const canSubmit = !!(c.name.trim() && c.empresa.trim() && this.emailOk(c.email) && st.consent);
+
+    const langActive = {padding:'8px 15px',fontSize:'14px',fontWeight:600,fontFamily:'Poppins,system-ui,sans-serif',border:'none',cursor:'pointer',background:accent,color:'#04201C'};
+    const langInactive = {padding:'8px 15px',fontSize:'14px',fontWeight:600,fontFamily:'Poppins,system-ui,sans-serif',border:'none',cursor:'pointer',background:'transparent',color:th.muted};
+
+    return {
+      rootStyle, L,
+      isWelcome: st.screen==='welcome', isQuestion: st.screen==='q', isContact: st.screen==='contact', isResult: st.screen==='result', isThanks: st.screen==='thanks',
+      start: ()=>{ this._dir='fwd'; this.setState({screen:'q', qIndex:0}); },
+      setLangPt: ()=>{ this._manualLang=true; this.setState({lang:'pt'}); },
+      setLangEn: ()=>{ this._manualLang=true; this.setState({lang:'en'}); },
+      langPtStyle: lang==='pt'?langActive:langInactive, langEnStyle: lang==='en'?langActive:langInactive,
+      toggleTheme: ()=>{ this._manualTheme=true; this.setState(s=>({theme:s.theme==='dark'?'light':'dark'})); },
+      themeIcon: st.theme==='dark'?'lucide:sun':'lucide:moon',
+
+      qTitle:q.title[lang], qProgress, segments, goBack: ()=>this.back(),
+      isSector:q.kind==='sector', isLadder:q.kind==='ladder', isSingle:q.kind==='single',
+      sectorList, ladderList, singleList, setQStage:(el)=>{ this.qStage=el; },
+
+      cName:c.name, cEmpresa:c.empresa, cCargo:c.cargo, cEmail:c.email, cTelefone:c.telefone,
+      onContactInput:(e)=>{ const f=e.target.dataset.field; const v=e.target.value; this.setState(s=>({contact:{...s.contact,[f]:v}})); },
+      inpBase:inputBase, inpName:errName?inputErr:inputBase, inpEmpresa:errEmpresa?inputErr:inputBase, inpEmail:errEmail?inputErr:inputBase,
+      errName, errEmpresa, errEmail, errEmailMsg, errConsent,
+      consent:st.consent, consentBoxStyle:{width:'32px',height:'32px',borderRadius:'8px',border:'2px solid '+(st.consent?accent:th.line),flexShrink:0,display:'flex',alignItems:'center',justifyContent:'center',background:st.consent?accent:'transparent',transition:'background .15s,border-color .15s'},
+      toggleConsent:()=>this.setState(s=>({consent:!s.consent})),
+      showOffline: !st.online,
+      submitBtnStyle:{display:'flex',alignItems:'center',justifyContent:'center',gap:'12px',width:'100%',minHeight:'66px',marginTop:'26px',padding:'0 28px',background:accent,color:'#04201C',fontFamily:'Poppins,system-ui,sans-serif',fontSize:'20px',fontWeight:600,border:'none',borderRadius:'12px',cursor:canSubmit?'pointer':'not-allowed',opacity:canSubmit?1:0.5,transition:'opacity .2s'},
+      submit:()=>this.submitContact(),
+
+      displayScore:st.displayScore, ringCirc, ringOffset, levelColor:level.color, levelName:lv.name, profile:lv.profile,
+      traits:lv.traits, solutions:lv.solutions, priorities, prioritiesSub, nextStepLine, qr:st.qr,
+      book:()=>this.setState({screen:'thanks'}), restart:()=>this.restart(),
+    };
+  }
+}
+</script>
+</body>
+</html>
