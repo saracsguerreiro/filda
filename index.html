@@ -28,13 +28,13 @@
 
   <sc-if value="{{ isWelcome }}" hint-placeholder-val="{{ true }}">
     <div style="position:absolute;inset:0;background:var(--welcomeGrad);"></div>
-    <div style="position:absolute;width:440px;height:440px;border-radius:50%;background:radial-gradient(circle,rgba(0,194,168,0.20),rgba(0,194,168,0) 70%);top:-90px;left:-70px;animation:orbA 14s ease-in-out infinite;"></div>
+    <div style="position:absolute;width:440px;height:440px;border-radius:50%;background:radial-gradient(circle,rgba(3,110,242,0.20),rgba(3,110,242,0) 70%);top:-90px;left:-70px;animation:orbA 14s ease-in-out infinite;"></div>
     <div style="position:absolute;width:380px;height:380px;border-radius:50%;background:radial-gradient(circle,rgba(86,204,242,0.16),rgba(86,204,242,0) 70%);bottom:-70px;right:-50px;animation:orbB 17s ease-in-out infinite;"></div>
     <div style="position:relative;height:100%;width:100%;display:flex;justify-content:center;">
       <div style="width:100%;max-width:720px;height:100%;display:flex;flex-direction:column;padding:40px;">
         <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
           <div style="display:flex;align-items:center;">
-            <img src="{{ logoSrc }}" style="height:44px;" alt="TIS" />
+            <img src="{{ logoSrc }}" style="height:60px;" alt="TIS" />
           </div>
           <div style="display:flex;align-items:center;gap:10px;">
             <div style="display:flex;background:var(--surface);border:1px solid var(--line);border-radius:999px;overflow:hidden;">
@@ -180,7 +180,7 @@
       <div style="width:100%;max-width:720px;min-height:100%;display:flex;flex-direction:column;padding:34px 40px 40px;gap:20px;">
         <div style="display:flex;align-items:center;justify-content:space-between;">
           <div style="display:flex;align-items:center;">
-            <img src="{{ logoSrc }}" style="height:36px;" alt="TIS" />
+            <img src="{{ logoSrc }}" style="height:48px;" alt="TIS" />
           </div>
           <span style="font-size:13px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);">{{ L.resultHeader }}</span>
         </div>
@@ -238,7 +238,7 @@
         </div>
 
         <div style="background:var(--ctaGrad);border:1px solid var(--ctaBorder);border-radius:18px;padding:26px;animation:fadeUp .5s .32s both;">
-          <div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#7DF0E1;">
+          <div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#93C5FD;">
             <iconify-icon icon="lucide:rocket" style="font-size:18px"></iconify-icon>{{ nextStepLine }}
           </div>
           <h2 style="font-size:24px;font-weight:700;margin:12px 0 6px;line-height:1.25;letter-spacing:-0.3px;color:#FFFFFF;">{{ L.ctaTitle }}</h2>
@@ -266,7 +266,7 @@
   <sc-if value="{{ isThanks }}" hint-placeholder-val="{{ false }}">
     <div style="position:relative;height:100%;width:100%;display:flex;align-items:center;justify-content:center;padding:40px;">
       <div style="max-width:560px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:20px;">
-        <div style="width:96px;height:96px;border-radius:50%;background:rgba(0,194,168,0.14);display:flex;align-items:center;justify-content:center;animation:fadeUp .5s both;">
+        <div style="width:96px;height:96px;border-radius:50%;background:rgba(3,110,242,0.14);display:flex;align-items:center;justify-content:center;animation:fadeUp .5s both;">
           <iconify-icon icon="lucide:check" style="font-size:52px;color:var(--accent)"></iconify-icon>
         </div>
         <h1 style="font-size:36px;font-weight:700;margin:0;letter-spacing:-0.5px;color:var(--text);">{{ L.thanksTitle }}</h1>
@@ -282,12 +282,12 @@
 
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:820,&quot;height&quot;:1180},&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dark&quot;,&quot;light&quot;],&quot;default&quot;:&quot;dark&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Aparência&quot;},&quot;lang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;pt&quot;,&quot;en&quot;],&quot;default&quot;:&quot;pt&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Aparência&quot;},&quot;primaryColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#0A4DA2&quot;,&quot;options&quot;:[&quot;#0A4DA2&quot;,&quot;#063B7E&quot;,&quot;#1A56A8&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Aparência&quot;},&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#00C2A8&quot;,&quot;options&quot;:[&quot;#00C2A8&quot;,&quot;#00A896&quot;,&quot;#12B7A6&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Aparência&quot;},&quot;resetSeconds&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:40,&quot;min&quot;:10,&quot;max&quot;:120,&quot;unit&quot;:&quot;s&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Comportamento do quiosque&quot;},&quot;advanceDelay&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:360,&quot;min&quot;:0,&quot;max&quot;:1200,&quot;step&quot;:20,&quot;unit&quot;:&quot;ms&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Comportamento do quiosque&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:820,&quot;height&quot;:1180},&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dark&quot;,&quot;light&quot;],&quot;default&quot;:&quot;dark&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Aparência&quot;},&quot;lang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;pt&quot;,&quot;en&quot;],&quot;default&quot;:&quot;pt&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Aparência&quot;},&quot;primaryColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#0A4DA2&quot;,&quot;options&quot;:[&quot;#0A4DA2&quot;,&quot;#063B7E&quot;,&quot;#1A56A8&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Aparência&quot;},&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#036EF2&quot;,&quot;options&quot;:[&quot;#036EF2&quot;,&quot;#0258CC&quot;,&quot;#1A6EF0&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Aparência&quot;},&quot;resetSeconds&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:40,&quot;min&quot;:10,&quot;max&quot;:120,&quot;unit&quot;:&quot;s&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Comportamento do quiosque&quot;},&quot;advanceDelay&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:360,&quot;min&quot;:0,&quot;max&quot;:1200,&quot;step&quot;:20,&quot;unit&quot;:&quot;ms&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Comportamento do quiosque&quot;}}">
 class Component extends DCLogic {
   state = { screen:'welcome', qIndex:0, answers:{}, contact:{name:'',empresa:'',cargo:'',email:'',telefone:''}, consent:false, displayScore:0, triedSubmit:false, lang:'pt', theme:'dark', online:true, qr:null };
 
   themes = {
-    dark:  { bg:'#0B1220', text:'#F5F8FC', muted:'#A9B8D0', surface:'#111A2B', surface2:'#1A2740', line:'#2A3A57', faint:'#5f6f8c', eyebrow:'#2FD9C4', track:'#1A2740', inputBg:'#111A2B',
+    dark:  { bg:'#0B1220', text:'#F5F8FC', muted:'#A9B8D0', surface:'#111A2B', surface2:'#1A2740', line:'#2A3A57', faint:'#5f6f8c', eyebrow:'#60A5FA', track:'#1A2740', inputBg:'#111A2B',
       welcomeGrad:'radial-gradient(1200px 820px at 50% -12%,#0A4DA2 0%,rgba(10,77,162,0) 62%),#0B1220', ctaGrad:'linear-gradient(135deg,#0A4DA2,#063B7E)', ctaBorder:'#2A6FBF' },
     light: { bg:'#EEF3FA', text:'#0B1220', muted:'#51617A', surface:'#FFFFFF', surface2:'#F2F6FC', line:'#D8E1EF', faint:'#8595AD', eyebrow:'#0A4DA2', track:'#DCE6F3', inputBg:'#FFFFFF',
       welcomeGrad:'radial-gradient(1200px 820px at 50% -12%,#CFE0F5 0%,rgba(207,224,245,0) 62%),#EEF3FA', ctaGrad:'linear-gradient(135deg,#0A4DA2,#063B7E)', ctaBorder:'#2A6FBF' },
@@ -344,12 +344,12 @@ class Component extends DCLogic {
     { min:61, max:80, color:'#56CCF2',
       pt:{ name:'Data Driven', profile:'Cultura analítica com decisões orientadas por dados.', traits:['Dados disponíveis e dashboards','Cultura analítica','Decisões orientadas por dados','Procura por IA'], solutions:['Analytics','IA','Banco de Dados','Data Governance','IA Generativa'], nextStep:'Assessment IA' },
       en:{ name:'Data Driven', profile:'Analytical culture with data-driven decisions.', traits:['Data available and dashboards','Analytical culture','Data-driven decisions','Seeking AI'], solutions:['Analytics','AI','Database','Data Governance','Generative AI'], nextStep:'AI Assessment' } },
-    { min:81, max:100, color:'#00C2A8',
+    { min:81, max:100, color:'#036EF2',
       pt:{ name:'AI Ready', profile:'IA integrada ao negócio e automação avançada.', traits:['IA integrada ao negócio','Automação avançada','Dados estruturados','Cultura digital avançada'], solutions:['AI Lab','IA Generativa','Copilots','Automação Inteligente','Cyber para IA','Academia TIS Executiva'], nextStep:'Workshop Estratégico de IA' },
       en:{ name:'AI Ready', profile:'AI embedded in the business and advanced automation.', traits:['AI embedded in the business','Advanced automation','Structured data','Advanced digital culture'], solutions:['AI Lab','Generative AI','Copilots','Intelligent Automation','Cyber for AI','TIS Executive Academy'], nextStep:'AI Strategy Workshop' } },
   ];
 
-  LVLCOLORS = ['#E5484D','#F5A623','#F2C94C','#56CCF2','#00C2A8'];
+  LVLCOLORS = ['#E5484D','#F5A623','#F2C94C','#56CCF2','#036EF2'];
 
   STR = {
     pt: { tagline:'Tecnologia que Move Negócios', welcomeBadge:'Diagnóstico de Maturidade Digital', welcomeTitle:'Em que nível de maturidade digital está a sua organização?', welcomeSubtitle:'Responda a 7 perguntas rápidas e descubra o seu nível — com recomendações personalizadas das soluções TIS.', welcomeTime:'≈ 90 segundos', welcomeCta:'Iniciar Diagnóstico',
@@ -461,7 +461,7 @@ class Component extends DCLogic {
     const st = this.state; const lang = st.lang;
     const th = this.themes[st.theme] || this.themes.dark;
     const primary = this.props.primaryColor || '#0A4DA2';
-    const accent = this.props.accentColor || '#00C2A8';
+    const accent = this.props.accentColor || '#036EF2';
     const L = this.STR[lang];
 
     const rootStyle = { position:'fixed', inset:0, overflow:'hidden', fontFamily:'Poppins,system-ui,sans-serif', color:th.text, background:th.bg,
@@ -471,11 +471,11 @@ class Component extends DCLogic {
 
     const optBase = {display:'flex',alignItems:'center',gap:'16px',width:'100%',padding:'20px 22px',minHeight:'72px',borderRadius:'12px',cursor:'pointer',fontFamily:'Poppins,system-ui,sans-serif',fontSize:'20px',fontWeight:500,lineHeight:1.3,transition:'transform .12s ease,background .15s,border-color .15s',boxSizing:'border-box'};
     const norm = {background:th.surface, border:'2px solid '+th.line, color:th.text};
-    const sel = {background:'rgba(0,194,168,0.14)', border:'2px solid '+accent, color:th.text, boxShadow:'0 0 0 4px rgba(0,194,168,0.10)'};
+    const sel = {background:'rgba(3,110,242,0.14)', border:'2px solid '+accent, color:th.text, boxShadow:'0 0 0 4px rgba(3,110,242,0.10)'};
     const sectorBase = {display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',gap:'12px',padding:'20px 10px',minHeight:'124px',borderRadius:'16px',cursor:'pointer',fontFamily:'Poppins,system-ui,sans-serif',fontSize:'16px',fontWeight:600,textAlign:'center',transition:'transform .12s,background .15s,border-color .15s',boxSizing:'border-box'};
     const ladderBase = {display:'flex',alignItems:'center',gap:'18px',width:'100%',padding:'16px 20px',minHeight:'84px',borderRadius:'14px',cursor:'pointer',fontFamily:'Poppins,system-ui,sans-serif',transition:'transform .12s,background .15s,border-color .15s',boxSizing:'border-box'};
 
-    const sectorList = this.SECTORS.map((s,i)=>{ const isSel=ans===i; return { label:s[lang], icon:s.icon, iconColor:isSel?'#7DF0E1':accent, selected:isSel, style:{...sectorBase, ...(isSel?sel:norm)}, onSelect:()=>this.select(i) }; });
+    const sectorList = this.SECTORS.map((s,i)=>{ const isSel=ans===i; return { label:s[lang], icon:s.icon, iconColor:isSel?'#93C5FD':accent, selected:isSel, style:{...sectorBase, ...(isSel?sel:norm)}, onSelect:()=>this.select(i) }; });
     const ladderList = this.MATURITY.map((m,i)=>{ const isSel=ans===i; return { letter:m.letter, title:m[lang].title, desc:m[lang].desc, selected:isSel, badgeStyle:{flexShrink:0,width:'52px',height:'52px',borderRadius:'12px',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'26px',fontWeight:700,background:this.LVLCOLORS[i],color:'#0B1220'}, style:{...ladderBase, ...(isSel?sel:norm)}, onSelect:()=>this.select(i) }; });
     const opts = this.optionsFor(q);
     const singleList = opts.map((label,i)=>{ const isSel=ans===i; return { label, selected:isSel, style:{...optBase, ...(isSel?sel:norm)}, onSelect:()=>this.select(i) }; });
